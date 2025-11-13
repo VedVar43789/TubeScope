@@ -26,8 +26,8 @@ By tracking **daily trending videos** using the **YouTube Data API**, we analyze
 | Component | Technology |
 |------------|-------------|
 | **API & Data** | YouTube Data API v3 (`videos.list`, `videoCategories.list`) |
-| **Storage** | SQLite or daily CSV snapshots |
-| **Automation** | GitHub Actions / cron job |
+| **Storage** | Daily CSV snapshots |
+| **Automation** | Launchd for cron job |
 | **Analysis** | pandas, numpy, matplotlib, seaborn, lifelines |
 | **Web App** | Streamlit |
 | **Version Control** | Git + GitHub |
@@ -41,7 +41,7 @@ Unlike static datasets, TubeScope builds its own dataset dynamically:
 | Source | Description |
 |--------|-------------|
 | **YouTube Data API v3** | Fetches stats (views, likes, etc.) for trending videos using `videos.list` |
-| **Trending Videos Feed (U.S.)** | Pulled via scrapers like `youtube-trending-scraper` or `yt-trending` |
+| **Trending Videos Feed (U.S.)** | Pulled via API access `pull_request` |
 | **Category Lookup Table** | `videoCategories.list` endpoint used to tag videos (Music, Gaming, News, etc.) |
 
 Each day’s trending data is stored as a **timestamped snapshot**, forming a **custom time-series dataset** of trending videos and their lifecycle.
