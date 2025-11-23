@@ -1,0 +1,4 @@
+.env
+youtube_trending_video*.csv
+.DS_Store
+__pycache__/
