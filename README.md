@@ -7,8 +7,7 @@ Using machine learning and the YouTube Data API, we analyze channel metrics, vid
 ---
 ## Project Overview  
 
-> **Goal:** Build visualizations and metrics that show how long trending videos stay trending past one day and how that varies by category and channel metrics.
-
+> **Goal:** Predict which trending videos will achieve sustained viral success using category and channel metrics.
 
 ## Key Features
 - **Viral Video Detection** - Predicts which videos will trend >1 day
