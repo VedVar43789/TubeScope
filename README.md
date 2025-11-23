@@ -39,7 +39,7 @@ TubeScope takes a hybrid approach: we train on a Kaggle dataset (for time limita
 | Source | Description |
 |--------|-------------|
 | **YouTube Data API v3** | Fetches stats (views, likes, etc.) for trending videos using `videos.list` |
-| **Kaggle Dataset** |[https://www.kaggle.com/datasets/canerkonuk/youtube-trending-videos-global](url)
+| **Kaggle Dataset** |(Kaggle Dataset)[https://www.kaggle.com/datasets/canerkonuk/youtube-trending-videos-global](url)
 | **Trending Videos Feed (U.S.)** | Pulled via API access `pull_request` |
 | **Category Lookup Table** | `videoCategories.list` endpoint used to tag videos (Music, Gaming, News, etc.) |
 
