@@ -65,5 +65,5 @@ Each day’s trending data is stored as a **timestamped snapshot**, forming a **
 
 ## Results
 
-**Streamlit dashboard:** [TubeScope Streamlit] (https://tubescope-ds3.streamlit.app/)
+**Streamlit dashboard:** [TubeScope Streamlit](https://tubescope-ds3.streamlit.app/)
 
