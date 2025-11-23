@@ -7,7 +7,8 @@ Using machine learning and the YouTube Data API, we analyze channel metrics, vid
 ---
 ## Project Overview  
 
-> **Goal:** Predict which trending videos will achieve sustained viral success using category and channel metrics.
+> **Goal:** Build predictive visualizations and metrics that estimate how long a trending video will remain relevant, helping creators prioritize which videos to focus promotions or sponsorships on based on category and channel factors.
+
 
 ## Key Features
 - **Viral Video Detection** - Predicts which videos will trend >1 day
@@ -58,4 +59,10 @@ Each day’s trending data is stored as a **timestamped snapshot**, forming a **
    - Compute view trajectories and time-on-trending  
    - Run survival analysis to estimate category half-lives  
 6. **Predict:** If a video is a one hit wonder (trends for only one day) or a viral video (trends for more than a day) 
-7. **Visualize:** View results interactively via Streamlit dashboard  
+7. **Visualize:** View results interactively via Streamlit dashboard
+
+---
+
+## Results
+
+
