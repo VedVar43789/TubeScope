@@ -49,17 +49,31 @@ Each day’s trending data is stored as a **timestamped snapshot**, forming a **
 
 ---
 
-## Workflow  
+## 🔄 Project Workflow  
 
-1. **Daily Pull:** Fetch trending videos and metadata via API  
-2. **Store Snapshots:** Save as `/data/YYYY-MM-DD.csv` 
-3. **Merge Data:** Combine daily files into lifecycle dataset (`main_new.csv`)
-4. **EDA:** 
-5. **Analyze:**  
-   - Compute view trajectories and time-on-trending  
-   - Run survival analysis to estimate category half-lives  
-6. **Predict:** If a video is a one hit wonder (trends for only one day) or a viral video (trends for more than a day) 
-7. **Visualize:** View results interactively via Streamlit dashboard
+### **1. Data Pipeline**  
+- Train on ~10k historical Kaggle videos.  
+- Pull Top 50 U.S. trending videos daily via the YouTube API and save snapshots.
+
+### **2. Data Engineering**  
+- Aggregate snapshots by `video_id` to remove duplicates and prevent leakage.  
+- Create features such as Channel Authority and duration-based content metrics.
+
+### **3. Exploratory Analysis (EDA)**  
+- Explored relationships between categories, channels, and engagement patterns to understand what drives longer trending lifespans.
+
+### **4. Modeling**  
+- Survival curves show most videos trend for only one day → treat as a classification task.  
+- Train a balanced Random Forest to predict multi-day viral potential.
+
+### **5. Deployment**  
+- Streamlit app loads the latest snapshot, runs predictions, and ranks videos by viral probability.  
+- Includes a Viral Leaderboard and a video-level Deep Dive view.
+
+
+
+
+**Visualize:** View results interactively via Streamlit dashboard
 
 ---
 
