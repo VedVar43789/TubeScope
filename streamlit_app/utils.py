@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 import subprocess
-
+import sys
 import joblib
 import pandas as pd
 
@@ -206,17 +206,25 @@ def score_latest_batch(df_raw):
 
 
 def run_pull_trending():
+    """
+    Run pull_trending.py at repo root as a subprocess.
+
+    Assumes:
+      - pull_trending.py is located at ROOT / "pull_trending.py"
+      - It writes data/YYYY-MM-DD.csv and updates data_processed/main_NEW.csv
+    """
     script = ROOT / "pull_trending.py"
     if not script.exists():
         return False, f"pull_trending.py not found at {script}"
 
     try:
-        proc = subprocess.run(
-            ["python3", str(script)],
+        result = subprocess.run(
+            [sys.executable, str(script)],  # 👈 use the SAME Python as Streamlit
+            cwd=str(ROOT),                  # 👈 run from repo root so `data/` works
             capture_output=True,
             text=True,
             check=True,
         )
-        return True, proc.stdout
+        return True, result.stdout
     except subprocess.CalledProcessError as e:
         return False, e.stderr or str(e)
