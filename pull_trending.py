@@ -4,13 +4,13 @@ from googleapiclient.discovery import build
 import pandas as pd
 from datetime import datetime
 
-print("="*60)
-print("TUBESCOPE: YouTube API Data Collection (WITH CHANNEL METRICS)")
-print("="*60)
+# print("="*60)
+# print("TUBESCOPE: YouTube API Data Collection (WITH CHANNEL METRICS)")
+# print("="*60)
 
 # Set up API
 load_dotenv()
-api_key = os.getenv("API_key")
+api_key = os.environ["YOUTUBE_API_KEY"]
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 # ============================================================================
@@ -28,6 +28,15 @@ request = youtube.videos().list(
 
 response = request.execute()
 video_df = pd.json_normalize(response["items"])
+
+video_df = video_df.rename(columns={
+    'snippet.title': 'title',
+    'snippet.channelTitle': 'channelTitle',
+    'contentDetails.duration': 'duration',
+    'snippet.description': 'description',
+    'snippet.tags': 'tags',
+    'snippet.categoryId': 'category'
+})
 
 print(f"Fetched {len(video_df)} trending videos")
 
@@ -91,25 +100,26 @@ print(f"   Sample channel_subscriber_count: {video_df['channel_subscriber_count'
 
 print("\n[4/4] Mapping category names...")
 
+# Step 4: Map category names
 map_request = youtube.videoCategories().list(
     part="snippet",
     regionCode="US"
 )
-
 map_response = map_request.execute()
+
 category_df = pd.json_normalize(map_response["items"])
 category_df['id'] = category_df['id'].astype(int)
 
-# Merge categories
-video_df['snippet.categoryId'] = video_df['snippet.categoryId'].astype(int)
+# Ensure we always have an int column
+video_df['snippet.categoryId'] = video_df.get('snippet.categoryId', -1)
+video_df['snippet.categoryId'] = video_df['snippet.categoryId'].fillna(-1).astype(int)
+
 video_df = video_df.merge(
     category_df[['id', 'snippet.title']],
     left_on='snippet.categoryId',
     right_on='id',
     how='left'
-)
-
-video_df = video_df.rename(columns={'snippet.title_y': 'category_name'})
+).rename(columns={'snippet.title_y': 'category_name'})
 
 print(f"   Categories mapped")
 
@@ -117,8 +127,8 @@ print(f"   Categories mapped")
 # STEP 5: Save Today's Data
 # ============================================================================
 
-today = datetime.now().strftime("%Y-%m-%d")
-filename = f"data/{today}.csv"
+timestamp = datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%S")
+filename = f"data/{timestamp}.csv"
 video_df.to_csv(filename, index=False)
 
 print(f"\n✅ Saved: {filename}")
