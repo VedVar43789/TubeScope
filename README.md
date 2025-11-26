@@ -7,13 +7,14 @@ Using machine learning and the YouTube Data API, we analyze channel metrics, vid
 ---
 ## Project Overview  
 
-> **Goal:** Build predictive visualizations and metrics that estimate how long a trending video will remain relevant, helping creators prioritize which videos to focus promotions or sponsorships on based on category and channel factors.
+> **Goal:** Predict which YouTube trending videos will achieve sustained virality (>1 day trending) using machine learning, helping content creators and marketers identify high-potential content before it peaks.
+
 
 
 ## Key Features
 - **Viral Video Detection** - Predicts which videos will trend >1 day
 - **Daily Data Collection** - Automated YouTube API pipeline
-- **ML Model** - Random Forest with ~70% recall, ~50% precision
+- **ML Model** - Random Forest with 68.33% recall, 49.48% precision
 - **Survival Analysis** - Kaplan-Meier curves showing dropoff patterns
 - **Interactive Dashboard** - Streamlit web application
 - **Production Ready** - Trained models with proper feature encoding
@@ -31,6 +32,17 @@ Using machine learning and the YouTube Data API, we analyze channel metrics, vid
 | **Web App** | Streamlit |
 | **Version Control** | Git + GitHub |
 | **Predictive Modeling** | scikit-learn (Random Forest Classifier)|
+---
+## 📊 Model Performance
+
+| Metric | Value | Interpretation |
+|--------|-------|----------------|
+| **Accuracy** | 82.35% | Overall correct predictions |
+| **Precision** | 48.83% | 2.9x better than 17% baseline |
+| **Recall** | 68.33% | Catches 2 out of 3 viral videos |
+| **F1-Score** | 57.4% | Balanced performance |
+
+**Key Insight:** We optimized for recall to catch viral videos early, accepting slightly lower precision as a trade-off for early trend detection.
 
 ---
 
@@ -49,27 +61,25 @@ Each day’s trending data is stored as a **timestamped snapshot**, forming a **
 
 ---
 
-## 🔄 Project Workflow  
+## 🔄 How TubeScope Works
 
-### **1. Data Pipeline**  
-- Train on ~10k historical Kaggle videos.  
-- Pull Top 50 U.S. trending videos daily via the YouTube API and save snapshots.
+### **For Users:**
+1. **Refresh Data** - Click button to fetch today's 50 U.S. trending videos
+2. **View Top 5** - See videos with highest viral probability
+3. **Deep Dive** - Select any video from dropdown to see detailed analysis
+4. **Get Insights** - Understand which features drive viral predictions
+5. **Customize** - Customize your own inputs to see how well a video can survive the "24-Hour Cliff"
 
-### **2. Data Engineering**  
-- Aggregate snapshots by `video_id` to remove duplicates and prevent leakage.  
-- Create features such as Channel Authority and duration-based content metrics.
+### **Behind the Scenes:**
+1. **Data Collection** - Daily YouTube API pulls (50 trending videos + channel metrics)
+2. **Feature Engineering** - Extract channel authority, video metadata, temporal patterns.
+3. **ML Prediction** - Random Forest Classifier (trained on 10k historical videos)
+4. **Live Dashboard** - Streamlit displays ranked predictions and video stats
 
-### **3. Exploratory Analysis (EDA)**  
-- Explored relationships between categories, channels, and engagement patterns to understand what drives longer trending lifespans.
-
-### **4. Modeling**  
-- Survival curves show most videos trend for only one day → treat as a classification task.  
-- Train a balanced Random Forest to predict multi-day viral potential.
-
-### **5. Deployment**  
-- Streamlit app loads the latest snapshot, runs predictions, and ranks videos by viral probability.  
-- Includes a Viral Leaderboard and a video-level Deep Dive view.
-
+**Model Details:**
+- **Training:** Kaggle dataset (10k videos) with stratified 80/20 split
+- **Features:** Channel metrics (subscribers, videos, views), video metadata (duration, tags, description word count), temporal patterns (upload time, day of week)
+- **Optimization:** Class-weighted for imbalanced data (83/17 viral/standard ratio)
 
 
 
@@ -80,4 +90,16 @@ Each day’s trending data is stored as a **timestamped snapshot**, forming a **
 ## Results
 
 **Streamlit dashboard:** [TubeScope Streamlit](https://tubescope-ds3.streamlit.app/)
+
+### **Key Findings**
+- **Duration** is the #1 predictor
+- **Categories** such as Gaming, Music, and Entertainment tend to perform better
+- **Channel size/metrics** heavily dictates a video's virality
+- **Upload timing** matters, posting at 12PM is stronger than at 2AM
+
+### **Model Journey**
+1. **Started with regression** → R² = 0.95 (data leakage!)
+2. **Fixed leakage** → R² went negative (too noisy)
+3. **Kaplan-Meier analysis** → 83% dropoff at 24 hours
+4. **Pivoted to classification** → 68.33% recall, 48.83% precision ✅
 
