@@ -1,5 +1,7 @@
 import pandas as pd
 import streamlit as st
+st.set_page_config(layout="centered")
+
 
 from utils import (
     load_artifacts,

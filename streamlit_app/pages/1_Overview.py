@@ -3,6 +3,8 @@ from pathlib import Path
 
 STATIC_DIR = Path(__file__).resolve().parents[1] / "static"
 
+st.set_page_config(layout="centered")
+
 
 def main():
     st.title("Overview")

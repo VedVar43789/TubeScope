@@ -8,6 +8,7 @@ from utils import (
     FEATURE_COLS,
     CATEGORY_LABELS,
 )
+st.set_page_config(layout="centered")
 
 
 def comma_number(n):

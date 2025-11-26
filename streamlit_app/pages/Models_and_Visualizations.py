@@ -1,4 +1,6 @@
 import streamlit as st
+st.set_page_config(layout="centered")
+
 from pathlib import Path
 
 STATIC_DIR = Path(__file__).resolve().parents[1] / "static"

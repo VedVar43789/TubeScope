@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 import os
 from googleapiclient.discovery import build
 import pandas as pd
@@ -8,10 +7,12 @@ from datetime import datetime
 # print("TUBESCOPE: YouTube API Data Collection (WITH CHANNEL METRICS)")
 # print("="*60)
 
-# Set up API
+from dotenv import load_dotenv
+# Load local .env when developing
 load_dotenv()
+
 api_key = os.environ["YOUTUBE_API_KEY"]
-youtube = build('youtube', 'v3', developerKey=api_key)
+youtube = build("youtube", "v3", developerKey=api_key)
 
 # ============================================================================
 # STEP 1: Get Top 50 Trending Videos

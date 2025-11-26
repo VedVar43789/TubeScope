@@ -2,12 +2,9 @@
 import streamlit as st
 from pathlib import Path
 
-# Only call this once in your whole app – if you already call set_page_config
-# in another file, you can delete this block.
 st.set_page_config(
-    page_title="TubeScope – Viral Lifecycle Analytics",
-    page_icon="🎬",
-    layout="wide",
+    page_title="TubeScope",
+    layout="wide",  
 )
 
 # ---------- Header: logo + title ----------
