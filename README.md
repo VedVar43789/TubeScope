@@ -79,7 +79,7 @@ Each day’s trending data is stored as a **timestamped snapshot**, forming a **
 **Model Details:**
 - **Training:** Kaggle dataset (10k videos) with stratified 80/20 split
 - **Features:** Channel metrics (subscribers, videos, views), video metadata (duration, tags, description word count), temporal patterns (upload time, day of week)
-- **Optimization:** Class-weighted for imbalanced data (83/17 viral/standard ratio)
+- **Optimization:** Class-weighted for imbalanced data (83/17 standard/viral ratio)
 
 
 
